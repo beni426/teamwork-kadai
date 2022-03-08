@@ -35,8 +35,10 @@
               <p>
                 <%= agenda.title %>
                 <i class="right fa fa-angle-left"></i>
+                <% if current_user.id == agenda.user.id %>
                 <%= link_to I18n.t('views.button.delete'), agenda_path(agenda.id), method: :delete, data: { confirm: '削除しますか？' }, class: 'btn btn-sm btn-danger' %>
-              </p>
+                 <% end %>
+                 </p>
             </a>
             <ul class="nav nav-treeview" style="display: block;">
               <% agenda.articles.each do |article| %>
