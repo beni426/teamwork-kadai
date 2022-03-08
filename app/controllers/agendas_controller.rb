@@ -37,12 +37,9 @@ class AgendasController < ApplicationController
          AssignMailer.delete_agenda(@email_list).deliver
         redirect_to dashboard_url, notice: "#{@agenda.title}を削除しました。"
       end
-      
-  
-  end
+   end
 
   private
-
   def set_agenda
     @agenda = Agenda.find(params[:id])
   end

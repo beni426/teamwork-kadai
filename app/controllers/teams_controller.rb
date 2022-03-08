@@ -3,20 +3,16 @@ class TeamsController < ApplicationController
   before_action :set_team, only: %i[show edit update destroy assign_owner]
 
   def index
-    @teams = Team..includes([:agenda]).all
+    @teams = Team.all
   end
-
   def show
     @working_team = @team
     change_keep_team(current_user, @team)
   end
-
   def new
     @team = Team.new
   end
-
   def edit; end
-
   def create
     @team = Team.new(team_params)
     @team.owner = current_user
@@ -34,7 +30,6 @@ class TeamsController < ApplicationController
     AssignMailer.assign_owner_mail(@user.email).deliver
     redirect_to team_path, notice: 'オーナー権限が移動しました!'
   end
-
   def update
     if @team.update(team_params)
       redirect_to @team, notice: I18n.t('views.messages.update_team')
@@ -43,22 +38,18 @@ class TeamsController < ApplicationController
       render :edit
     end
   end
-
   def destroy
     @team.destroy
     redirect_to teams_url, notice: I18n.t('views.messages.delete_team')
   end
-
   def dashboard
     @team = current_user.keep_team_id ? Team.find(current_user.keep_team_id) : current_user.teams.first
   end
 
   private
-
   def set_team
     @team = Team.friendly.find(params[:id])
   end
-
   def team_params
     params.fetch(:team, {}).permit %i[name icon icon_cache owner_id keep_team_id]
   end

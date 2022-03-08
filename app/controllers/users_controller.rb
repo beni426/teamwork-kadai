@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   def edit
     @user = current_user
   end
-
   def update
     @user = current_user
     if @user.update(user_params)
@@ -11,13 +10,10 @@ class UsersController < ApplicationController
       render 'edit'
     end
   end
-
   def show
     @user = current_user
   end
-
   private
-
   def user_params
     params.require(:user).permit(:email, :icon, :keep_team_id)
   end

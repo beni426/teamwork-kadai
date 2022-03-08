@@ -50,11 +50,9 @@ class ArticlesController < ApplicationController
   end
 
   private
-
   def set_article
     @article = Article.find(params[:id])
   end
-
   def article_params
     params.fetch(:article, {}).permit %i[title content image image_cache]
   end
