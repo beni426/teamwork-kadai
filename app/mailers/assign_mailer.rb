@@ -10,4 +10,8 @@ class AssignMailer < ApplicationMailer
     @email_list = email_list
     mail to: @email_list, subject: "アジェンダの削除"
   end
+  def assign_owner_mail(email)
+    @email = email
+    mail to: @email, subject: 'team owner　になりました！'
+  end
 end
