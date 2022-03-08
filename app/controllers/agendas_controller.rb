@@ -20,6 +20,26 @@ class AgendasController < ApplicationController
       render :new
     end
   end
+  def update
+    @agenda = Agenda.find(params[:id])
+    @agenda.update(agenda_params)
+    redirect_to dashboard_url
+  end
+  def destroy
+    @agenda = Agenda.find(params[:id])
+     if current_user.id == @agenda.user.id || current_user.id == @team.owner.id
+       @keep_team_id =  @agenda.team_id
+       @user_id_array = Assign.where(team_id: @keep_team_id).pluck(:user_id)
+       @email_list =  @user_id_array.map do |user_id|
+         User.where(id: user_id).pluck(:email)[0]
+        end
+        @agenda.destroy
+         AssignMailer.delete_agenda(@email_list).deliver
+        redirect_to dashboard_url, notice: "#{@agenda.title}を削除しました。"
+      end
+      
+  
+  end
 
   private
 

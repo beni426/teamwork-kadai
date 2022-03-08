@@ -3,7 +3,7 @@ class TeamsController < ApplicationController
   before_action :set_team, only: %i[show edit update destroy]
 
   def index
-    @teams = Team.all
+    @teams = Team..includes([:agenda]).all
   end
 
   def show
